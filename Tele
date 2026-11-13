@@ -1,4 +1,4 @@
-@Cà phê ☕️🇻🇳: -- Khởi tạo ScreenGui
+-- Khởi tạo ScreenGui
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local CoreGui = game:GetService("CoreGui")
 local TweenService = game:GetService("TweenService")
