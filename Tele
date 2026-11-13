@@ -1,0 +1,52 @@
+@Cà phê ☕️🇻🇳: -- Khởi tạo ScreenGui
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local CoreGui = game:GetService("CoreGui")
+local TweenService = game:GetService("TweenService")
+-- Xóa GUI cũ nếu có để tránh trùng lặp
+if CoreGui:FindFirstChild("MobileTeleportGUI") then
+CoreGui.MobileTeleportGUI:Destroy()
+end
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "MobileTeleportGUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = CoreGui
+-- Bảng lưu trữ tọa độ
+local waypoints = {}
+local waypointCount = 0
+----------------------------------------------------------------
+-- 1. NÚT BẬT/TẮT Ở GÓC MÀN HÌNH (TOGGLE BUTTON)
+----------------------------------------------------------------
+local ToggleBtn = Instance.new("TextButton")
+ToggleBtn.Name = "ToggleBtn"
+ToggleBtn.Size = UDim2.new(0, 55, 0, 55)
+ToggleBtn.Position = UDim2.new(0.05, 0, 0.15, 0) -- Vị trí góc trên bên trái
+ToggleBtn.BackgroundColor3 = Color3.fromRGB(0, 122, 255)
+ToggleBtn.Text = "📍"
+ToggleBtn.TextSize = 25
+ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleBtn.Parent = ScreenGui
+-- Bo tròn nút
+local ToggleCorner = Instance.new("UICorner")
+ToggleCorner.CornerRadius = UDim.new(0, 50)
+ToggleCorner.Parent = ToggleBtn
+-- Tạo hiệu ứng kéo thả nút Toggle cho Mobile
+local draggingToggle, dragInputToggle, dragStartToggle, startPosToggle
+ToggleBtn.InputBegan:Connect(function(input)
+if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
+draggingToggle = true
+dragStartToggle = input.Position
+startPosToggle = ToggleBtn.Position
+end
+end)
+ToggleBtn.InputChanged:Connect(function(input)
+if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseMovement then
+dragInputToggle = input
+end
+end)
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+if input == dragInputToggle and draggingToggle then
+local delta = input.Position - dragStartToggle
+ToggleBtn.Position = UDim2.new(startPosToggle.X.Scale, startPosToggle.X.Offset + delta.X, startPosToggle.Y.Scale, startPosToggle.Y.Offset + delta.Y)
+end
+end)
+game:Get
