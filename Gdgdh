@@ -1,0 +1,49 @@
+ -- SPEED CUSTOM
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.CoreGui
+local mainFrame = Instance.new("Frame")
+mainFrame.Parent = screenGui
+mainFrame.Size = UDim2.new(0, 200, 0, 80)
+mainFrame.Position = UDim2.new(0.5, -100, 0.85, 0)
+mainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+mainFrame.BackgroundTransparency = 0.15
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true
+mainFrame.Draggable = true
+local corner = Instance.new("UICorner")
+corner.Parent = mainFrame
+corner.CornerRadius = UDim.new(0, 12)
+local title = Instance.new("TextLabel")
+title.Parent = mainFrame
+title.Size = UDim2.new(1, 0, 0, 30)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "⚡ SPEED | Basta Hub"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextScaled = true
+title.Font = Enum.Font.GothamBold
+local speedBox = Instance.new("TextBox")
+speedBox.Parent = mainFrame
+speedBox.Size = UDim2.new(0.7, 0, 0, 35)
+speedBox.Position = UDim2.new(0.15, 0, 0, 38)
+speedBox.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+speedBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+speedBox.Text = tostring(humanoid.WalkSpeed)
+speedBox.PlaceholderText = "Speed"
+speedBox.Font = Enum.Font.Gotham
+local speedCorner = Instance.new("UICorner")
+speedCorner.Parent = speedBox
+speedCorner.CornerRadius = UDim.new(0, 8)
+speedBox.FocusLost:Connect(function()
+local val = tonumber(speedBox.Text)
+if val then
+val = math.clamp(val, 16, 120)
+humanoid.WalkSpeed = val
+speedBox.Text = val
+else
+speedBox.Text = humanoid.WalkSpeed
+end
+end)
