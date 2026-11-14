@@ -1,0 +1,24 @@
+ -- CLICK TO TELEPORT TOOL
+-- LocalScript
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+-- tạo tool
+local tool = Instance.new("Tool")
+tool.Name = "Click Teleport"
+tool.RequiresHandle = false
+tool.Parent = player:WaitForChild("Backpack")
+local mouse
+tool.Equipped:Connect(function(m)
+mouse = m
+end)
+tool.Activated:Connect(function()
+if not mouse then return end
+local char = player.Character
+if not char then return end
+local hrp = char:FindFirstChild("HumanoidRootPart")
+if not hrp then return end
+if mouse.Hit then
+-- dịch chuyển lên cao 3 stud để tránh kẹt đất
+hrp.CFrame = CFrame.new(mouse.Hit.Position + Vector3.new(0,3,0))
+end
+end)
